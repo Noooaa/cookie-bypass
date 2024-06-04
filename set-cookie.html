@@ -18,22 +18,21 @@
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Set Cookie&lt;/title&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function setCookie(name, value) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.cookie = name + '=' + value + '; path=/; secure; samesite=None';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>window.parent.postMessage('cookie-set', '*');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getQueryParam(param) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let urlParams = new URLSearchParams(window.location.search);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return urlParams.get(param);</p>
 <p class="p1"><span class="Apple-converted-space">        </span>}</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">        </span>window.onload = function() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const urlParams = new URLSearchParams(window.location.search);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const name = urlParams.get('name');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const value = urlParams.get('value');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (name &amp;&amp; value) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setCookie(name, value);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let cookieName = getQueryParam('name');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let cookieValue = getQueryParam('value');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.cookie = `${cookieName}=${cookieValue}; path=/; secure; samesite=None`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.parent.postMessage('cookie-set', '*');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
 <p class="p1">&lt;/head&gt;</p>
 <p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Setting cookie...</p>
 <p class="p1">&lt;/body&gt;</p>
 <p class="p1">&lt;/html&gt;</p>
 </body>

@@ -18,27 +18,29 @@
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Test Cookie&lt;/title&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function getCookie(name) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const value = `; ${document.cookie}`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const parts = value.split(`; ${name}=`);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (parts.length === 2) return parts.pop().split(';').shift();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getQueryParam(param) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let urlParams = new URLSearchParams(window.location.search);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return urlParams.get(param);</p>
 <p class="p1"><span class="Apple-converted-space">        </span>}</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">        </span>window.onload = function() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const urlParams = new URLSearchParams(window.location.search);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const name = urlParams.get('name');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (name) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const value = getCookie(name);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (value) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>window.parent.postMessage('cookie-test-success', '*');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>window.parent.postMessage('cookie-test-failure', '*');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let cookieName = getQueryParam('name');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let cookies = document.cookie.split('; ').reduce((acc, cookie) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let [name, value] = cookie.split('=');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>acc[name] = value;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return acc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, {});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (cookies[cookieName]) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.parent.postMessage('cookie-test-success', '*');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.parent.postMessage('cookie-test-failure', '*');</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
 <p class="p1">&lt;/head&gt;</p>
 <p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Testing cookie...</p>
 <p class="p1">&lt;/body&gt;</p>
 <p class="p1">&lt;/html&gt;</p>
 </body>
